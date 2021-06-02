@@ -1,0 +1,27 @@
+{
+  "name": "bookdirectory",
+  "version": "1.0.0",
+  "description": "This is a book directory application. PART OF A PRACTICE PROJECT",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NamanBhoj/BookDirectory.git"
+  },
+  "keywords": [
+    "Practice",
+    "API"
+  ],
+  "author": "Naman Bhoj",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NamanBhoj/BookDirectory/issues"
+  },
+  "homepage": "https://github.com/NamanBhoj/BookDirectory#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7"
+  }
+}
