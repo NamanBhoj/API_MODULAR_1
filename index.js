@@ -1,5 +1,84 @@
+//const { resolveNaptr } = require("dns");
 const express = require("express");
 
 const app = express();
 
+const fs = require("fs");
+
+//create DUMMY DATA for post api call
+// const valueadd = {
+//   id: 5,
+//   name: "Book E",
+//   duration: 200,
+//   maxGroupSize: 50,
+//   difficulty: "hard",
+//   ratingsAverage: 30,
+//   ratingsQuantity: 200,
+//   price: 3000,
+//   summary: "About Stuff D",
+//   description:
+//     "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+// };
+
+const datavalue = JSON.parse(
+  fs.readFileSync(
+    //TOP LEVEL CODE DOESNT CHANGE NEITHER NEEDS FETCHIGN AGAIN AND AGAIN SO OUTSIDE OF CALLBACK",
+    "C:/Users/Naman Bhoj/Desktop/May-July/FULL_STACK/NODE/API_MODULAR_1/dev-data/data/book_info.json"
+  )
+);
+
+// RESTFUL ARCHITECTURE RULES:
+// 1) SEPERATION OF LOGICAL RESOURCES I.E. CREATE ENDPOINT FOR  RESOURCES I.E. NOUNS AND NOT VERBS , HERE WE HAVE ONLY ONE THAT IS BOOKS
+
+// 2)  API HAS TWO PARTS : ROUTE AND THE HTTP REQUEST BASED ON THAT YOU CREATE ADD, DELETE EDIT AND RETREIVE FUNCTIONALITY
+
+//3) SEND RECEIVE ONLY JSON DATA_URL_DEFAULT_CHARSET
+
+//4) STATELESS
+
+//API ENDPOINTS AND ROUTE -> LATER SEPERATE THE CONTROLLER TO NEWFILE AND ROUTER FOR THE RESOURCE, ONLY KEEP THE ENDPOINT URL
+
+//1) GET API
+app.get("/api/v1/books/:id?", function (req, res) {
+  // keeping id as an optional parameter
+  // read from database in this case a json file
+
+  if (datavalue.length == 0) {
+    return res.send.status(500).json({
+      status: "There is an error from the server end",
+      message: "please report the error at support@founderro.com",
+    });
+  } else if (datavalue.length != 0 && req.params.id < datavalue.length) {
+    res.status(200).send(datavalue);
+  }
+  //    else if (req.params.id != null) {
+  //     const sendvalue = datavalue.requiredid;
+  //     // console.log(sendvalue);
+  //     res.send(sendvalue);
+  //     // console.log(req.params.id); // just printing out the optional variable
+  //   }
+});
+
+// post api
+//CHECK USING POSTMAN
+
+app.post("/api/v1/books", function (req, res) {
+  res.status(200).json({
+    status: "success",
+    message: "book added",
+  });
+});
+// //
+//
+//
+//
+//Exports
+
 module.exports = app;
+//   fs.writeFileSync(
+//     "C:/Users/Naman Bhoj/Desktop/May-July/FULL_STACK/NODE/API_MODULAR_1/dev-data/data/book_info.json",
+//     valueadd,
+//     function (req, res) {
+//       console.log("Wrote to the file");
+//     }
+//   );
