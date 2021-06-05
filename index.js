@@ -27,6 +27,7 @@ const datavalue = JSON.parse(
   )
 );
 
+//console.log(datavalue);
 // RESTFUL ARCHITECTURE RULES:
 // 1) SEPERATION OF LOGICAL RESOURCES I.E. CREATE ENDPOINT FOR  RESOURCES I.E. NOUNS AND NOT VERBS , HERE WE HAVE ONLY ONE THAT IS BOOKS
 
@@ -73,6 +74,35 @@ app.post("/api/v1/books", function (req, res) {
 //
 //
 //Exports
+
+//UPDATE API using PATCH
+
+app.patch("/api/v1/books/:id/:price?", function (req, res) {
+  const id = req.params.id;
+  const new_price = req.params.price;
+
+  // write in a file in in the position of current item
+  let requiredindex = 0;
+  for (i = 0; i < datavalue.length; i++) {
+    if (datavalue[i].id == id) {
+      requiredindex = i;
+    }
+  }
+
+  datavalue[requiredindex].price = new_price; // subsituiting the price here
+
+  // console.log(datavalue);
+  console.log(" The required index is " + requiredindex);
+  fs.writeFileSync(
+    "C:/Users/Naman Bhoj/Desktop/May-July/FULL_STACK/NODE/API_MODULAR_1/dev-data/data/book_info.json",
+    JSON.stringify(datavalue),
+    function (req, res) {
+      res.status(200).json({
+        status: "all good",
+      });
+    }
+  );
+});
 
 module.exports = app;
 //   fs.writeFileSync(
