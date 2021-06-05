@@ -50,7 +50,7 @@ app.get("/api/v1/books/:id?", function (req, res) {
       message: "please report the error at support@founderro.com",
     });
   } else if (datavalue.length != 0 && req.params.id < datavalue.length) {
-    res.status(200).send(datavalue);
+    res.status(200).json({ data: datavalue });
   }
   //    else if (req.params.id != null) {
   //     const sendvalue = datavalue.requiredid;
@@ -63,10 +63,10 @@ app.get("/api/v1/books/:id?", function (req, res) {
 // post api
 //CHECK USING POSTMAN
 
-app.post("/api/v1/books", function (req, res) {
+app.post("/api/v1/books/", function (req, res) {
   res.status(200).json({
     status: "success",
-    message: "book added",
+    message: "post request succesful",
   });
 });
 // //
@@ -92,16 +92,40 @@ app.patch("/api/v1/books/:id/:price?", function (req, res) {
   datavalue[requiredindex].price = new_price; // subsituiting the price here
 
   // console.log(datavalue);
-  console.log(" The required index is " + requiredindex);
+  console.log(" The required index for update request is " + requiredindex);
   fs.writeFileSync(
     "C:/Users/Naman Bhoj/Desktop/May-July/FULL_STACK/NODE/API_MODULAR_1/dev-data/data/book_info.json",
-    JSON.stringify(datavalue),
-    function (req, res) {
-      res.status(200).json({
-        status: "all good",
-      });
-    }
+    JSON.stringify(datavalue)
   );
+
+  res.status(200).json({
+    status: "ok",
+    message: "patch request succesful",
+  });
+});
+
+//DELETE API
+app.delete("/api/v1/books/:id", function (req, res) {
+  const id = req.params.id;
+
+  let requiredindex = null;
+  for (i = 0; i < datavalue.length; i++) {
+    if (datavalue[i].id == id) {
+      requiredindex = i;
+    }
+  }
+  console.log(" The required index for delete request is " + requiredindex);
+
+  datavalue.splice(requiredindex, 1);
+  // console.log(datavalue);
+  fs.writeFileSync(
+    "C:/Users/Naman Bhoj/Desktop/May-July/FULL_STACK/NODE/API_MODULAR_1/dev-data/data/book_info.json",
+    JSON.stringify(datavalue)
+  );
+  res.status(200).json({
+    status: "ok",
+    message: "deletes request succesful",
+  });
 });
 
 module.exports = app;
